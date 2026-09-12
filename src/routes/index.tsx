@@ -4,7 +4,11 @@ export default function Home() {
   return (
     <main>
       <Title>Speechr</Title>
-      <h1>Hey Speechr!</h1>
+      <h1 class="text-emerald-400">Speechr</h1>
+      <p>Spin for speech prompt</p>
+      <button type="button" class="btn btn-primary">
+        Spin
+      </button>
     </main>
   );
 }
