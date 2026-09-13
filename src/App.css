@@ -1,2 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap");
+
 @import "tailwindcss";
 @plugin "daisyui";
+
+@theme {
+  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+}
+
+@plugin "daisyui/theme" {
+  name: "speechr";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+
+  --color-base-100: oklch(98% 0.025 83);
+  --color-base-200: oklch(94% 0.04 83);
+  --color-base-300: oklch(88% 0.055 83);
+  --color-base-content: oklch(23% 0.06 255);
+
+  --color-primary: oklch(62% 0.22 32);
+  --color-primary-content: oklch(99% 0.01 83);
+
+  --color-secondary: oklch(58% 0.22 275);
+  --color-secondary-content: oklch(98% 0.012 275);
+
+  --color-accent: oklch(82% 0.18 95);
+  --color-accent-content: oklch(24% 0.07 70);
+
+  --color-neutral: oklch(25% 0.07 255);
+  --color-neutral-content: oklch(97% 0.018 83);
+
+  --color-info: oklch(72% 0.15 225);
+  --color-info-content: oklch(22% 0.06 255);
+
+  --color-success: oklch(72% 0.17 150);
+  --color-success-content: oklch(21% 0.065 150);
+
+  --color-warning: oklch(78% 0.2 72);
+  --color-warning-content: oklch(24% 0.07 55);
+
+  --color-error: oklch(61% 0.24 25);
+  --color-error-content: oklch(99% 0.01 25);
+
+  --radius-selector: 2rem;
+  --radius-field: 2rem;
+  --radius-box: 2rem;
+
+  --size-selector: 0.28125rem;
+  --size-field: 0.3125rem;
+
+  --border: 2px;
+  --depth: 1;
+  --noise: 0;
+}
