@@ -61,16 +61,16 @@ export const playTimesUp = () => {
     frequency: number,
     start: number,
     duration: number,
-    peak = 0.045,
+    peak = 0.065,
   ) => {
     const oscillator = context.createOscillator();
     const gain = context.createGain();
 
-    oscillator.type = "sine";
+    oscillator.type = "triangle";
     oscillator.frequency.value = frequency;
 
     gain.gain.setValueAtTime(0.001, start);
-    gain.gain.exponentialRampToValueAtTime(peak, start + 0.025);
+    gain.gain.exponentialRampToValueAtTime(peak, start + 0.015);
     gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
 
     oscillator.connect(gain);
@@ -83,5 +83,5 @@ export const playTimesUp = () => {
   playNote(523.25, now, 0.18);
   playNote(659.25, now + 0.11, 0.2);
   playNote(783.99, now + 0.22, 0.28);
-  playNote(1046.5, now + 0.38, 0.34, 0.03);
+  playNote(1046.5, now + 0.38, 0.34, 0.045);
 };
