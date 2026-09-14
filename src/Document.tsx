@@ -10,12 +10,12 @@ import type { ParentProps } from "solid-js";
 // needed. Delete this file to fall back to the plugin's built-in shell.
 export default function Document(props: ParentProps) {
   return (
-    <html lang="en" data-theme="speechr">
+    <html lang="en" data-theme="speechable">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <title>Speechr App</title>
+        <title>Speechable</title>
         <HydrationScript />
       </head>
       <body>{props.children}</body>

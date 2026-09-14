@@ -1,4 +1,3 @@
-import { Title } from "@solidjs/meta";
 import { paths, Router } from "./router";
 import "./App.css";
 import Header from "./components/Header";
@@ -10,7 +9,6 @@ export default function App() {
     <Router>
       {(props) => (
         <>
-          <Title>Speechr</Title>
           <Header />
           {props.children}
         </>

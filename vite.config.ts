@@ -13,7 +13,7 @@ export default defineConfig({
     // modules the fileRoutes plugin emits (their ids end in a query string).
     solid({
       start: true,
-      ssr: true,
+      ssr: false,
       extensions: [".jsx", ".tsx"],
       diagnostics: true,
     }), // add `ssr: true` for streaming SSR
@@ -22,6 +22,9 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+  },
+  ssr: {
+    noExternal: ["solid-icons"],
   },
   test: {
     environment: "jsdom",

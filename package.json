@@ -1,5 +1,5 @@
 {
-  "name": "speechr",
+  "name": "speechable",
   "version": "0.0.0",
   "description": "",
   "type": "module",
@@ -32,6 +32,7 @@
     "@solidjs/router": "^2.0.0-next.21",
     "@solidjs/web": "^2.0.0-rc.6",
     "@tailwindcss/vite": "^4.3.3",
+    "solid-icons": "^1.2.0",
     "solid-js": "^2.0.0-rc.6",
     "tailwindcss": "^4.3.3"
   }

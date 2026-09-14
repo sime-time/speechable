@@ -20,6 +20,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.2.2(jiti@2.7.0))
+      solid-icons:
+        specifier: ^1.2.0
+        version: 1.2.0(solid-js@2.0.0-rc.6)
       solid-js:
         specifier: ^2.0.0-rc.6
         version: 2.0.0-rc.6
@@ -1800,6 +1803,11 @@ packages:
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
+  solid-icons@1.2.0:
+    resolution: {integrity: sha512-yjQxWQMi9l19P5Af9vjsvalTMDFPDL4XD6etrUdNxNVhFp1bMYF0SFwUa5VYDfJ7u0SF3Qkz/F7BZxqcLUwklw==}
+    peerDependencies:
+      solid-js: '*'
+
   solid-js@2.0.0-rc.6:
     resolution: {integrity: sha512-Z/M8s9ypLBf+6Bl3AAb5upgkYCl73HkpM+UxdUJ5uFGctTwpOQVCM9Gpj3Mjbiaki270HHUfA3Z0Lyn4w+fDtg==}
 
@@ -3571,6 +3579,10 @@ snapshots:
   shebang-regex@3.0.0: {}
 
   siginfo@2.0.0: {}
+
+  solid-icons@1.2.0(solid-js@2.0.0-rc.6):
+    dependencies:
+      solid-js: 2.0.0-rc.6
 
   solid-js@2.0.0-rc.6:
     dependencies:

@@ -9,7 +9,7 @@
 }
 
 @plugin "daisyui/theme" {
-  name: "speechr";
+  name: "speechable";
   default: true;
   prefersdark: false;
   color-scheme: "light";
@@ -53,4 +53,15 @@
   --border: 2px;
   --depth: 1;
   --noise: 0;
+}
+
+/* cursor highlight selection */
+::selection {
+  background: color-mix(in oklch, var(--color-primary) 35%, transparent);
+  color: var(--color-base-content);
+}
+
+::-moz-selection {
+  background: color-mix(in oklch, var(--color-primary) 35%, transparent);
+  color: var(--color-base-content);
 }
