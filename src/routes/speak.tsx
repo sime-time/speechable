@@ -1,17 +1,10 @@
-import {
-  createMemo,
-  createSignal,
-  onCleanup,
-  onSettled,
-  Show,
-  Switch,
-  Match,
-} from "solid-js";
+import { createMemo, createSignal, onSettled, Switch, Match } from "solid-js";
+import MicPermission from "../components/MicPermission";
 import { FaSolidArrowRotateBack, FaSolidArrowLeft } from "solid-icons/fa";
 import { playTimesUp } from "../lib/sounds";
 
 const COUNTDOWN_SECONDS = 5;
-const SPEAK_SECONDS = 3;
+const SPEAK_SECONDS = 60;
 const COUNTDOWN_MS = COUNTDOWN_SECONDS * 1000;
 const SPEAK_MS = SPEAK_SECONDS * 1000;
 
@@ -27,12 +20,82 @@ export default function Speak() {
   const [phase, setPhase] = createSignal<Phase>(Phase.Idle);
   const [countdownMs, setCountdownMs] = createSignal(COUNTDOWN_MS);
   const [speakMs, setSpeakMs] = createSignal(SPEAK_MS);
-  const [micError, setMicError] = createSignal("");
   const [isRequestingMic, setIsRequestingMic] = createSignal(false);
+  const [micChoiceHandled, setMicChoiceHandled] = createSignal(false);
+  const [shouldUseMic, setShouldUseMic] = createSignal(false);
 
   let micDialog: HTMLDialogElement | undefined;
   let micStream: MediaStream | undefined;
 
+  const stopMicStream = () => {
+    if (!micStream) return;
+
+    for (const track of micStream.getTracks()) {
+      track.stop();
+    }
+
+    micStream = undefined;
+  };
+
+  // Microphone Access
+  const requestMicPermission = async () => {
+    setIsRequestingMic(true);
+
+    try {
+      micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setMicChoiceHandled(true);
+      setShouldUseMic(true);
+      micDialog?.close();
+      startSpeaking();
+    } catch {
+      setShouldUseMic(false);
+    } finally {
+      setIsRequestingMic(false);
+    }
+  };
+
+  const continueWithoutMic = () => {
+    stopMicStream();
+    setMicChoiceHandled(true);
+    setShouldUseMic(false);
+    micDialog?.close();
+    startSpeaking();
+  };
+
+  onSettled(() => {
+    let disposed = false;
+
+    const checkMicPermission = async () => {
+      try {
+        const permission = await navigator.permissions?.query({
+          name: "microphone" as PermissionName,
+        });
+
+        if (disposed) return;
+
+        if (permission?.state === "granted") {
+          void requestMicPermission();
+          return;
+        }
+
+        micDialog?.showModal();
+      } catch {
+        if (disposed) return;
+
+        micDialog?.showModal();
+      }
+    };
+
+    void checkMicPermission();
+
+    return () => {
+      disposed = true;
+      window.cancelAnimationFrame(animationFrame);
+      stopMicStream();
+    };
+  });
+
+  // Circle Animation
   const radius = 132;
   const strokeWidth = 14;
   const circumference = 2 * Math.PI * radius;
@@ -43,6 +106,7 @@ export default function Speak() {
     () => -circumference * (1 - remainingPercent()),
   );
 
+  // Timer Clock
   const displayTime = createMemo(() => {
     const secondsLeft = Math.ceil(speakMs() / 1000);
     const minutes = Math.floor(secondsLeft / 60);
@@ -67,6 +131,7 @@ export default function Speak() {
   const stopSpeaking = () => {
     setPhase(Phase.Stopped);
     window.cancelAnimationFrame(animationFrame);
+    stopMicStream();
   };
 
   const startSpeaking = () => {
@@ -91,6 +156,7 @@ export default function Speak() {
 
         if (remaining === 0) {
           playTimesUp();
+          stopMicStream();
           setPhase(Phase.Done);
           return;
         }
@@ -103,10 +169,6 @@ export default function Speak() {
 
     animationFrame = window.requestAnimationFrame(tick);
   };
-
-  onCleanup(() => {
-    window.cancelAnimationFrame(animationFrame);
-  });
 
   return (
     <main class="relative isolate flex min-h-screen overflow-hidden bg-base-100 px-5 py-24 text-base-content sm:px-8">
@@ -167,7 +229,22 @@ export default function Speak() {
             <Match when={phase() === Phase.Idle}>
               <button
                 type="button"
-                onClick={startSpeaking}
+                onClick={() => {
+                  if (isRequestingMic()) return;
+
+                  if (!micChoiceHandled()) {
+                    micDialog?.showModal();
+                    return;
+                  }
+
+                  if (shouldUseMic()) {
+                    // Reacquire mic for the next attempt
+                    void requestMicPermission();
+                    return;
+                  }
+
+                  startSpeaking();
+                }}
                 class="btn btn-success min-h-14 rounded-full px-10 text-lg font-extrabold uppercase tracking-wide shadow-md transition-transform hover:scale-105 active:scale-95"
               >
                 Start
@@ -212,6 +289,15 @@ export default function Speak() {
           </Switch>
         </div>
       </section>
+
+      <MicPermission
+        setDialog={(dialog) => {
+          micDialog = dialog;
+        }}
+        isRequesting={isRequestingMic()}
+        onEnableMic={requestMicPermission}
+        onContinueWithoutMic={continueWithoutMic}
+      />
     </main>
   );
 }
