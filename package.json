@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "node --env-file-if-exists=.env server.js",
+    "start": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
