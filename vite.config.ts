@@ -26,6 +26,9 @@ export default defineConfig({
   ssr: {
     noExternal: ["solid-icons"],
   },
+  preview: {
+    allowedHosts: ["speechable.up.railway.app"],
+  },
   test: {
     environment: "jsdom",
     globals: false,
