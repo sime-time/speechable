@@ -32,6 +32,21 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
+      ],
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/bricolage-grotesque/BricolageGrotesque-Bold.otf",
+            "./assets/fonts/bricolage-grotesque/BricolageGrotesque-SemiBold.otf",
+            "./assets/fonts/bricolage-grotesque/BricolageGrotesque-Medium.otf",
+            "./assets/fonts/bricolage-grotesque/BricolageGrotesque-Regular.otf",
+            "./assets/fonts/figtree/Figtree-Bold.otf",
+            "./assets/fonts/figtree/Figtree-SemiBold.otf",
+            "./assets/fonts/figtree/Figtree-Medium.otf",
+            "./assets/fonts/figtree/Figtree-Regular.otf"
+          ]
+        }
       ]
     ],
     "experiments": {

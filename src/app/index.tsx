@@ -1,17 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { s } from "@/ui/styles";
+import { useTheme } from "@/ui/theme";
 
 export default function Index() {
+  const { c } = useTheme();
   return (
-    <View style={styles.container}>
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
+    <View
+      style={[
+        s.flex1,
+        s.itemsCenter,
+        s.justifyCenter,
+        { backgroundColor: c.primary },
+      ]}
+    >
+      <Text style={[{ color: c.foreground }]}>Speechable.</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
